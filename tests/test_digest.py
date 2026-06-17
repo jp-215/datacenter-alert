@@ -7,6 +7,7 @@ from dc_alert.digest import (
     normalize_title,
     parse_pubdate,
     rank,
+    to_records,
 )
 
 HOUR = 3600 * 1000
@@ -60,3 +61,9 @@ def test_format_digest_empty_and_links():
     assert "Nothing notable" in format_digest([], "2026-06-16", "SF Bay Area")
     text = format_digest([_item("Hi", 1, link="http://e.com")], "2026-06-16", "SF Bay Area")
     assert "<http://e.com>" in text
+
+
+def test_to_records_shape():
+    recs = to_records([_item("Hi", 5, link="http://e.com", source="DCD")])
+    assert recs == [{"title": "Hi", "link": "http://e.com", "source": "DCD",
+                     "published_ms": 5}]

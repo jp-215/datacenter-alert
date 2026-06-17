@@ -76,3 +76,16 @@ def format_digest(items: list[Item], date_str: str, region_label: str) -> str:
         src = f" ({it.source})" if it.source else ""
         lines.append(f"- {it.title}{src}\n  <{it.link}>")
     return "\n".join(lines)
+
+
+def to_records(items: list[Item]) -> list[dict]:
+    """Serialize items to plain dicts (for the web dashboard's data.json)."""
+    return [
+        {
+            "title": it.title,
+            "link": it.link,
+            "source": it.source,
+            "published_ms": it.published_ms,
+        }
+        for it in items
+    ]
