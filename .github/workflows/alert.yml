@@ -1,0 +1,20 @@
+name: Daily Alert
+
+on:
+  schedule:
+    # ~8:07am Pacific. GitHub cron is UTC; 15:07 UTC = 08:07 PDT (07:07 PST).
+    - cron: "7 15 * * *"
+  workflow_dispatch: {}  # allow manual runs from the Actions tab
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run alert
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python -m dc_alert.cli --post

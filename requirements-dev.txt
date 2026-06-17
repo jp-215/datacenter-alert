@@ -1,0 +1,4 @@
+# Core uses only the Python standard library — no runtime deps.
+# These are just for linting + tests.
+pytest>=8.0
+ruff>=0.6
